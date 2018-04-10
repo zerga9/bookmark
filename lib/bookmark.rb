@@ -2,8 +2,8 @@ require 'pg'
 
 class Bookmark
   def self.all
-    connection = if ENV['ENVIRONMENT'] == 'test'
-                   PG.connect(dbname: 'bookmark_manager')
+    connection = if ENV['RACK_ENV'] == 'test'
+                   PG.connect(dbname: 'bookmark_manager_test')
                  else
                    PG.connect(dbname: 'bookmark_manager')
                  end

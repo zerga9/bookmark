@@ -11,8 +11,8 @@ describe Bookmark do
 
       expected_bookmarks = [
         'http://makersacademy.com',
-        'http://google.com',
-        'http://destroyallsoftware.com'
+        'http://destroyallsoftware.com',
+        'http://google.com'
       ]
 
       expect(Bookmark.all).to eq expected_bookmarks

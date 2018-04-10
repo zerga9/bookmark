@@ -3,9 +3,9 @@ feature 'View links' do
   scenario 'A user can see the database' do
     connection = PG.connect(dbname: 'bookmark_manager_test')
 
-    connection.exec("INSERT INTO bookmarks VALUES(1, 'http://makersacademy.com');")
-    connection.exec("INSERT INTO bookmarks VALUES(2, 'http://destroyallsoftware.com');")
-    connection.exec("INSERT INTO bookmarks VALUES(3, 'http://google.com');")
+    # connection.exec("INSERT INTO bookmarks VALUES(1, 'http://makersacademy.com');")
+    # connection.exec("INSERT INTO bookmarks VALUES(2, 'http://destroyallsoftware.com');")
+    # connection.exec("INSERT INTO bookmarks VALUES(3, 'http://google.com');")
 
     visit('/bookmarks')
 
