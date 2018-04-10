@@ -1,16 +1,19 @@
 require 'pg'
 feature 'View links' do
   scenario 'A user can see the database' do
-    connection = PG.connect(dbname: 'bookmark_manager_test')
+    # connection = PG.connect(dbname: 'bookmark_manager_test')
 
     # connection.exec("INSERT INTO bookmarks VALUES(1, 'http://makersacademy.com');")
     # connection.exec("INSERT INTO bookmarks VALUES(2, 'http://destroyallsoftware.com');")
     # connection.exec("INSERT INTO bookmarks VALUES(3, 'http://google.com');")
+    Bookmark.create(url: 'http://makersacademy.com')
+    Bookmark.create(url: 'http://destroyallsoftware.com')
+    Bookmark.create(url: 'http://twitter.com')
 
     visit('/bookmarks')
 
     expect(page).to have_content 'http://makersacademy.com'
     expect(page).to have_content 'http://destroyallsoftware.com'
-    expect(page).to have_content 'http://google.com'
+    expect(page).to have_content 'http://twitter.com'
   end
 end
