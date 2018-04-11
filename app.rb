@@ -6,21 +6,17 @@ require 'sinatra/flash'
 class BookmarkManager < Sinatra::Base
   register Sinatra::Flash
   enable :sessions
+
   get '/' do
     'Hello World'
   end
+
   post '/bookmarks' do
-    #   if params['url'] =~ /\A#{URI.regexp(%w[http https])}\z/
-    #     Bookmark.create(url: params['url'])
-    #   else
-    #     flash[:notice] = 'You must submit a valid URL.'
-    # end
     flash[:notice] = 'You must submit a valid URL.' unless Bookmark.create(url: params['url'])
     redirect '/bookmarks'
   end
 
   get '/bookmarks' do
-    # p ENV
     flash[:notice].to_s if flash[:notice]
     @bookmarks = Bookmark.all
     erb :index
@@ -29,16 +25,6 @@ class BookmarkManager < Sinatra::Base
   get '/bookmarks/new' do
     erb :"bookmarks/new"
   end
-
-  # post '/bookmarks' do
-  #   #   if params['url'] =~ /\A#{URI.regexp(%w[http https])}\z/
-  #   #     Bookmark.create(url: params['url'])
-  #   #   else
-  #   #     flash[:notice] = 'You must submit a valid URL.'
-  #   # end
-  #   flash[:notice] = 'You must submit a valid URL.' unless Bookmark.create(url: params['url'])
-  #   redirect '/bookmarks'
-  # end
 
   run! if app_file == $PROGRAM_NAME
 end
