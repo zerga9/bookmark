@@ -2,15 +2,15 @@ require 'bookmark'
 
 describe Bookmark do
   describe '.all' do
-    it 'returns all bookmarks in an array' do
-      Bookmark.create(url: 'http://makersacademy.com')
-      Bookmark.create(url: 'http://destroyallsoftware.com')
-      Bookmark.create(url: 'http://google.com')
+    it 'returns all bookmarks title in an array' do
+      Bookmark.create('http://test1.com', 'makersacademy')
+      Bookmark.create('http://test2.com', 'destroyallsoftware')
+      Bookmark.create('http://test3.com', 'google')
 
-      expected_bookmarks = [
-        'http://makersacademy.com',
-        'http://destroyallsoftware.com',
-        'http://google.com'
+      expected_bookmarks = %w[
+        makersacademy
+        destroyallsoftware
+        google
       ]
 
       expect(Bookmark.all).to eq expected_bookmarks
@@ -18,12 +18,12 @@ describe Bookmark do
   end
   describe '.create' do
     it 'creates a new bookmark' do
-      Bookmark.create(url: 'http://www.testbookmark.com')
+      Bookmark.create('http://www.test4.com', 'test4')
 
-      expect(Bookmark.all).to include 'http://www.testbookmark.com'
+      expect(Bookmark.all).to include 'test4'
     end
     it 'does not create a new bookmark if the URL is not valid' do
-      Bookmark.create(url: 'not a real bookmark')
+      Bookmark.create('not a real bookmark', 'not a real title')
 
       expect(Bookmark.all).not_to include 'not a real bookmark'
     end

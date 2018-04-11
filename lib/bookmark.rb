@@ -8,17 +8,17 @@ class Bookmark
                    PG.connect(dbname: 'bookmark_manager')
                  end
     result = connection.exec('SELECT * FROM bookmarks')
-    result.map { |bookmark| bookmark['url'] }
-end
+    result.map { |bookmark| bookmark['title'] }
+  end
 
-  def self.create(options)
-    return false unless is_url?(options[:url])
+  def self.create(link, title)
+    return false unless is_url?(link)
     connection = if ENV['RACK_ENV'] == 'test'
                    PG.connect(dbname: 'bookmark_manager_test')
                  else
                    PG.connect(dbname: 'bookmark_manager')
                 end
-    connection.exec("INSERT INTO bookmarks (url) VALUES('#{options[:url]}')")
+    connection.exec("INSERT INTO BOOKMARKS(url, title) VALUES('#{link}', '#{title}')")
   end
 
   private
