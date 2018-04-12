@@ -39,4 +39,11 @@ describe '.url' do
     expect(Bookmark.url.last).to eq 'http://www.test5.com'
   end
 end
+describe'.delete' do
+  it 'deletes a bookmark' do
+    Bookmark.create('http://www.test10.com', 'test10')
+    Bookmark.delete('http://www.test10.com')
+    expect(Bookmark.all).not_to include "test10"
+  end
+end
 end

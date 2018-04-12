@@ -1,9 +1,15 @@
 <%= flash[:notice]%>
 <%= flash[:notice2]%>
 <ul>
+
 <% @urls.each do |url| %>
-<li><%= url %></li>
+
+
+<li><%= url %><form action="/bookmarks/delete" method="post"><input type="submit" value='Delete' /></form></li>
+
+
 <% end %>
+
 </ul>
 <form action="/bookmarks/new" method="get">
 <input type="submit" value='create bookmark' />

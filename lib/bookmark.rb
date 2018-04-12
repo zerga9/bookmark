@@ -46,6 +46,15 @@ class Bookmark
     result = connection.exec('SELECT * FROM bookmarks')
     result.map { |bookmark| bookmark['url'] }
   end
+  def self.delete(link)
+    connection = if ENV['RACK_ENV'] == 'test'
+                   PG.connect(dbname: 'bookmark_manager_test')
+                 else
+                   PG.connect(dbname: 'bookmark_manager')
+                 end
+    connection.exec("DELETE FROM BOOKMARKS WHERE url = '#{link}'")
+
+  end
 
   private
 

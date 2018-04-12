@@ -41,4 +41,21 @@ feature 'Adding a new bookmark' do
   expect(page).to have_link("been here", :href =>"http://www.twitter.com")
 
   end
+
+  scenario 'there is a button to delete bookmarks' do
+    visit('/bookmarks/new')
+    fill_in('url', with: "http://www.test12.com")
+    fill_in('title', with: 'test12')
+    click_button('Submit')
+    expect(page).to have_button('Delete')
+  end
+  scenario 'Clicking the delete button, deletes the bookmark' do
+    visit('/bookmarks/new')
+    fill_in('url', with: "http://www.test13.com")
+    fill_in('title', with: 'test13')
+    click_button('Submit')
+    click_button('Delete')
+    expect(page).not_to have_link("test13", :href =>"http://www.test13.com")
+  end
+
 end

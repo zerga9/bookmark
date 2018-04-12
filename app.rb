@@ -18,6 +18,7 @@ class BookmarkManager < Sinatra::Base
     if (Bookmark.is_url?(params['url'])) && (Bookmark.title?(params['title']))
        Bookmark.create(params['url'], params['title'])
     end
+    p params
     redirect '/bookmarks'
   end
 
@@ -26,16 +27,27 @@ class BookmarkManager < Sinatra::Base
     @bookmarks = Bookmark.all
     @urls = Bookmark.display
     erb :index
+
   end
 
   get '/bookmarks/new' do
     # flash[:notice2].to_s if flash[:notice2]
     erb :"bookmarks/new"
+
+
+
   end
 
   post '/bookmarks/new' do
     # flash[:notice2] = "You must submit a title." unless Bookmark.title?(params['title'])
     erb :"bookmarks/new"
+    redirect '/bookmarks'
+
+  end
+  post '/bookmarks/delete' do
+    p params
+    # Bookmark.delete(params['url'])
+
     redirect '/bookmarks'
   end
 
