@@ -12,7 +12,7 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks' do
-    flash[:notice] = 'You must submit a valid URL.' unless Bookmark.create(params['url'])
+    flash[:notice] = 'You must submit a valid URL.' unless Bookmark.create(params['url'], params['title'])
     redirect '/bookmarks'
   end
 
@@ -24,6 +24,11 @@ class BookmarkManager < Sinatra::Base
 
   get '/bookmarks/new' do
     erb :"bookmarks/new"
+  end
+
+  post '/bookmarks/new' do
+    erb :"bookmarks/new"
+    redirect '/bookmarks'
   end
 
   run! if app_file == $PROGRAM_NAME

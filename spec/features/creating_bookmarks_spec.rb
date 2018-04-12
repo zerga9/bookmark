@@ -15,4 +15,8 @@ feature 'Adding a new bookmark' do
     # expect(page).not_to have_content 'not a real bookmark'
     expect(page).to have_content 'You must submit a valid URL.'
   end
+  scenario 'There is a button to create bookmark' do
+    visit '/bookmarks'
+    expect(page).to have_button('create bookmark')
+  end
 end
