@@ -12,7 +12,7 @@ class Bookmark
   end
 
   def self.create(link, title)
-    return false unless is_url?(link)
+    return false unless is_url?(link) && title?(title)
     connection = if ENV['RACK_ENV'] == 'test'
                    PG.connect(dbname: 'bookmark_manager_test')
                  else
@@ -25,5 +25,10 @@ class Bookmark
 
   def self.is_url?(url)
     url =~ /\A#{URI.regexp(%w[http https])}\z/
+  end
+  def self.title?(title)
+    if title.length > 0
+      return true
+    end
   end
 end

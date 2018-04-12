@@ -12,21 +12,27 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks' do
-    flash[:notice] = 'You must submit a valid URL.' unless Bookmark.create(params['url'], params['title'])
+    flash[:notice] = 'You must submit a valid URL.' unless Bookmark.is_url?(params['url'])
+    flash[:notice2] = "You must submit a title." unless Bookmark.title?(params['title'])
+    if (Bookmark.is_url?(params['url'])) && (Bookmark.title?(params['title']))
+       Bookmark.create(params['url'], params['title'])
+    end
     redirect '/bookmarks'
   end
 
   get '/bookmarks' do
-    flash[:notice].to_s if flash[:notice]
+    # flash[:notice].to_s if flash[:notice]
     @bookmarks = Bookmark.all
     erb :index
   end
 
   get '/bookmarks/new' do
+    # flash[:notice2].to_s if flash[:notice2]
     erb :"bookmarks/new"
   end
 
   post '/bookmarks/new' do
+    # flash[:notice2] = "You must submit a title." unless Bookmark.title?(params['title'])
     erb :"bookmarks/new"
     redirect '/bookmarks'
   end

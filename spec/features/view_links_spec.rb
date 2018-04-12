@@ -11,4 +11,7 @@ feature 'View links' do
     expect(page).to have_content 'test2'
     expect(page).to have_content 'test3'
   end
+  scenario "there is a hyperlink to the website" do
+
+  end
 end

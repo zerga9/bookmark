@@ -28,4 +28,9 @@ describe Bookmark do
       expect(Bookmark.all).not_to include 'not a real bookmark'
     end
   end
+  describe '.title?' do
+    it 'returns true if there is a title ' do
+      expect(Bookmark.title?('title')).to eq true
+    end
+end
 end

@@ -2,7 +2,7 @@ feature 'Adding a new bookmark' do
   scenario 'A user can add a bookmark to Bookmark Manager' do
     visit('/bookmarks/new')
     fill_in('url', with: 'http://test4.com')
-    fill_in('title', with:'test4')
+    fill_in('title', with: 'test4')
     click_button('Submit')
 
     expect(page).to have_content 'test4'
@@ -14,6 +14,15 @@ feature 'Adding a new bookmark' do
 
     # expect(page).not_to have_content 'not a real bookmark'
     expect(page).to have_content 'You must submit a valid URL.'
+  end
+  scenario "User must enter title" do
+    visit('/bookmarks/new')
+    fill_in('url', with: "http://www.twitter.com")
+    fill_in('title', with: '')
+    click_button('Submit')
+    # visit('/bookmarks/new')
+    expect(page).to have_content 'You must submit a title.'
+
   end
   scenario 'There is a button to create bookmark' do
     visit '/bookmarks'
