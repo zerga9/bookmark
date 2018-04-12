@@ -22,13 +22,21 @@ class Bookmark
 
   def self.create(link, title)
     return false unless is_url?(link) && title?(title)
-    connection = if ENV['RACK_ENV'] == 'test'
-                   PG.connect(dbname: 'bookmark_manager_test')
+               if ENV['RACK_ENV'] == 'test'
+                   connection = PG.connect(dbname: 'bookmark_manager_test')
                  else
-                   PG.connect(dbname: 'bookmark_manager')
+                   connection =  PG.connect(dbname: 'bookmark_manager')
                 end
-    connection.exec("INSERT INTO BOOKMARKS(url, title) VALUES('#{link}', '#{title}')")
-  end
+                result = connection.exec('SELECT * FROM bookmarks')
+                url_list = result.map { |bookmark| bookmark['url'] }
+                if url_list.include?(link)
+                  connection.exec "UPDATE bookmarks SET title = '#{title}' WHERE url = '#{link}'"
+                else
+                  connection.exec("INSERT INTO bookmarks(url, title) VALUES('#{link}', '#{title}')")
+                end
+
+                result = connection.exec('SELECT * FROM bookmarks')
+              end
   def self.url
     connection = if ENV['RACK_ENV'] == 'test'
                    PG.connect(dbname: 'bookmark_manager_test')

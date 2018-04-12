@@ -15,6 +15,6 @@ feature 'View links' do
     Bookmark.create('http://bbc.com', 'bbc')
     visit('/bookmarks')
     expect(page).to have_link("bbc", :href =>"http://bbc.com")
-
   end
+
 end

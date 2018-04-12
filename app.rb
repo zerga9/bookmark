@@ -14,6 +14,7 @@ class BookmarkManager < Sinatra::Base
   post '/bookmarks' do
     flash[:notice] = 'You must submit a valid URL.' unless Bookmark.is_url?(params['url'])
     flash[:notice2] = "You must submit a title." unless Bookmark.title?(params['title'])
+    # flash[:notice3] =
     if (Bookmark.is_url?(params['url'])) && (Bookmark.title?(params['title']))
        Bookmark.create(params['url'], params['title'])
     end

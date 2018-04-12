@@ -28,4 +28,17 @@ feature 'Adding a new bookmark' do
     visit '/bookmarks'
     expect(page).to have_button('create bookmark')
   end
+
+  scenario "title is updated when url is already in database" do
+  visit('/bookmarks/new')
+  fill_in('url', with: "http://www.twitter.com")
+  fill_in('title', with: 'twitter')
+  click_button('Submit')
+  visit('/bookmarks/new')
+  fill_in('url', with: "http://www.twitter.com")
+  fill_in('title', with: 'been here')
+  click_button('Submit')
+  expect(page).to have_link("been here", :href =>"http://www.twitter.com")
+
+  end
 end
