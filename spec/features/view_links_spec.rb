@@ -12,6 +12,9 @@ feature 'View links' do
     expect(page).to have_content 'test3'
   end
   scenario "there is a hyperlink to the website" do
+    Bookmark.create('http://bbc.com', 'bbc')
+    visit('/bookmarks')
+    expect(page).to have_link("bbc", :href =>"http://bbc.com")
 
   end
 end

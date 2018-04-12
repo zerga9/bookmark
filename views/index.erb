@@ -1,13 +1,10 @@
 <%= flash[:notice]%>
 <%= flash[:notice2]%>
 <ul>
-<% @bookmarks.each do |bookmark| %>
-<li><%= bookmark %></li>
+<% @urls.each do |url| %>
+<li><%= url %></li>
 <% end %>
 </ul>
 <form action="/bookmarks/new" method="get">
-
-
-  <input type="submit" value='create bookmark' />
-
+<input type="submit" value='create bookmark' />
 </form>

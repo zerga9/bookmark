@@ -10,6 +10,15 @@ class Bookmark
     result = connection.exec('SELECT * FROM bookmarks')
     result.map { |bookmark| bookmark['title'] }
   end
+  def self.url
+    connection = if ENV['RACK_ENV'] == 'test'
+                   PG.connect(dbname: 'bookmark_manager_test')
+                 else
+                   PG.connect(dbname: 'bookmark_manager')
+                 end
+    result = connection.exec('SELECT * FROM bookmarks')
+    result.map { |bookmark| "<a href=" + bookmark['url'] + ">" + bookmark['title'] + "</a>" }
+  end
 
   def self.create(link, title)
     return false unless is_url?(link) && title?(title)
