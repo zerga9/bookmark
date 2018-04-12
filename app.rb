@@ -23,7 +23,7 @@ class BookmarkManager < Sinatra::Base
   get '/bookmarks' do
     # flash[:notice].to_s if flash[:notice]
     @bookmarks = Bookmark.all
-    @urls = Bookmark.url
+    @urls = Bookmark.display
     erb :index
   end
 

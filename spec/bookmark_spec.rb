@@ -33,4 +33,10 @@ describe Bookmark do
       expect(Bookmark.title?('title')).to eq true
     end
 end
+describe '.url' do
+  it 'returns the url in a string form' do
+    Bookmark.create('http://www.test5.com', 'test5')
+    expect(Bookmark.url.last).to eq 'http://www.test5.com'
+  end
+end
 end
