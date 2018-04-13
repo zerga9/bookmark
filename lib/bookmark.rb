@@ -2,22 +2,22 @@ require 'pg'
 
 class Bookmark
   def self.all
-    connection = if ENV['RACK_ENV'] == 'test'
-                   PG.connect(dbname: 'bookmark_manager_test')
+            if ENV['RACK_ENV'] == 'test'
+                   connection = PG.connect(dbname: 'bookmark_manager_test')
                  else
-                   PG.connect(dbname: 'bookmark_manager')
+                  connection =  PG.connect(dbname: 'bookmark_manager')
                  end
     result = connection.exec('SELECT * FROM bookmarks')
     result.map { |bookmark| bookmark['title'] }
   end
   def self.display
-    connection = if ENV['RACK_ENV'] == 'test'
-                   PG.connect(dbname: 'bookmark_manager_test')
+               if ENV['RACK_ENV'] == 'test'
+                  connection =  PG.connect(dbname: 'bookmark_manager_test')
                  else
-                   PG.connect(dbname: 'bookmark_manager')
+                   connection = PG.connect(dbname: 'bookmark_manager')
                  end
     result = connection.exec('SELECT * FROM bookmarks')
-    result.map { |bookmark| "<a href=" + bookmark['url'] + ">" + bookmark['title'] + "</a>" }
+    result.map { |bookmark| "<a href=" + bookmark['url'] + ">" + bookmark['title'] + "</a>" + "<input type='submit' value = Delete" + " name = " + bookmark['title'] + ">" }
   end
 
   def self.create(link, title)
@@ -38,21 +38,21 @@ class Bookmark
                 result = connection.exec('SELECT * FROM bookmarks')
               end
   def self.url
-    connection = if ENV['RACK_ENV'] == 'test'
-                   PG.connect(dbname: 'bookmark_manager_test')
+    if ENV['RACK_ENV'] == 'test'
+                   connection = PG.connect(dbname: 'bookmark_manager_test')
                  else
-                   PG.connect(dbname: 'bookmark_manager')
+                   connection = PG.connect(dbname: 'bookmark_manager')
                  end
     result = connection.exec('SELECT * FROM bookmarks')
     result.map { |bookmark| bookmark['url'] }
   end
-  def self.delete(link)
-    connection = if ENV['RACK_ENV'] == 'test'
-                   PG.connect(dbname: 'bookmark_manager_test')
-                 else
-                   PG.connect(dbname: 'bookmark_manager')
-                 end
-    connection.exec("DELETE FROM BOOKMARKS WHERE url = '#{link}'")
+  def self.delete(title)
+      if ENV['RACK_ENV'] == 'test'
+         connection = PG.connect(dbname: 'bookmark_manager_test')
+       else
+         connection = PG.connect(dbname: 'bookmark_manager')
+      end
+    connection.exec("DELETE FROM BOOKMARKS WHERE title = '#{title}'")
 
   end
 
