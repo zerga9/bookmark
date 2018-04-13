@@ -1,6 +1,6 @@
 # Week 4: Bookmark Manager
 
-### Day 1: Jihin and Shih Han
+### Day 1: Gadiza And Mary
 
 #### Create user stories and domain model.
 
@@ -19,15 +19,6 @@ First user story:
 In a new git repo, run `bundle init` to create a new Gemfile. Inside the Gemfile, we entered a bunch of core gems that we usually use on top of Capybara, Rspec and Sinatra.
 `bundle install` will install the gems.
 `rspec --init` creates the base RSpec files.
-We filled in the spec_helper file with the relevant `require`s.
-We created a `config.ru` file and required our `app.rb`, as well as running the the app.
-We created a `.gitignore` to ignore the coverage data.
-We created a `app.rb` file and created app class.
-We created `bookmark_spec.rb` for `all` method, and implemented into `bookmark.rb`.
-We fixed the `spec_helper.rb`, because it couldn't reach the `app.rb` file.
-
-We decided to hardcode the bookmarks into the `Bookmark` class. We called on the class in the `app.rb` file, saving it as an instance variable, and then calling on these instance variables in the `index.erb` file.
-The result is a website that lists the pages.
 
 
 #### Setting up a database, creating first table, manipulating table data
@@ -41,66 +32,57 @@ http://www.cheat-sheets.org/sites/sql.su/
 
 `\q` quits back to the terminal.
 
-### Day 2: Jihin and Mary
-
-#### Interating with PostgreSQL from Ruby
-
-We will be doing this via a gem called pg. This is a module that allows Ruby programs to interact with PostgreSQL database.
-
-I have renamed the `bookmark.rb` file to `link.rb`, and changed the class name to `Link`.
-In order for pg to work, it needs to be included in the Gemfile, bundle installed, and then required in the `link.rb` file. From there, I followed the pg documentation:
-
-http://zetcode.com/db/postgresqlruby/
-
-Under the "Retrieving multiple rows of data" paragraph, I followed the syntaxing in order to connect to the database, selecting the data froml the database, and then tried the `rs.each do |row|` block. I then tried saving this all in the array. I ended up using the walkthrough to find out how to do this, and it turns out I would need to map through the hash and save it all in an array.
-
-The tests have been adjusted to reflect the new bookmarks and the correct link formatting.
+Made an app.rb with BookmarkManager class, and made first feature test to view the links.
+Changed the spec_helper.rb to require the app.rb and rspec and capybara.
+Then made a lib/bookmark.rb file to put the Bookmark class in and a spec/bookmark_spec.rb to put the first unit tests in('returns all bookmarks'). Then made a views/index.erb to use in the app.rb, to show the bookmarks on the page.
 
 #### Upgrading your toolset
 
 We downloaded Tableplus and connected to the `bookmark_manager` database. From here, we can edit the database easily.
 
+### Day 2: Gadiza and Sam
+
+#### Interating with PostgreSQL from Ruby
+
+We will be doing this via a gem called pg. This is a module that allows Ruby programs to interact with PostgreSQL database.
+
+In order for pg to work, it needs to be included in the Gemfile, bundle installed, and then required in the `app.rb` file.
 
 #### Setting up a testing environment
 
-I first enabled ENV in spec-helper. From there, I started working on the `link_spec.rb`. As I was adding the connection to the new test database, I realised that the test had no way to reset the database so that it would only show the information that would be included in the test.
+I first enabled ENV in spec-helper.
 
-Mary then pointed out that I needed to create a `setup_test_database.rb` file, which essentially acts like a script that clears the database whenever RSpec is run, so that the data would be correct.
+I created a `setup_test_database.rb` file, which essentially acts like a script that clears the database whenever RSpec is run, so that the data would be correct.
+Created the bookmarks for the test environment.
 
-In the tests for `link_spec.rb` and `app_spec.rb`, I reset the PG connection to the bookmark_manager_test database, and then run through the process of saving and then printing the row.
-
-However, I realised while looking into the `app_spec.rb`, I have realised that while I'm running the test, the capybara test wouldn't pass. I spoke to Sam Jones mentioned that I needed to look into environment variables that can keep tabs of when RSpec is working. In order to implement this, I would need an `if` statement that checks if an environment variable is active. If it is, then it would select the test database. If not, it would select the standard database.
-
-In the end, this is a long winded way of stubbing the function of the database using a test database that wipes itself at each RSpec run.
-
-#### Creating bookmarks
-
-```
-As a user, so that I can refer to them later, I want to save a bookmark.
-```
-
-Even after adding the conditional into `link.rb`, I figured out that there would be no way to test the index webpage in a reasonable time for me to reach this next step and delete the test completely.
-I decided to ignore this and then go ahead to test and implement the `.add(url)` method.
-
-Once this has been done, I sketched a rough route plan for the website to organise how to call the different methods. I decided that the index page should show two buttons: view and add.
-
-The view button directs to `/view`, where it lists the bookmarks.
-
-The add button directs to `/add`, where it asks the user for a bookmark. It will post into `/adding` and then redirect to `/view`.
+installed sinatra-flash to use flash notice in the app file. And uri. Enabled sessions for flash to work and made a flash[:notice] for a user to submit a valid URL.
+New unit tests and feature tests for bookmark if the URL is not valid.
 
 ### Day 3: Gadiza and Jihin
 
 #### Validating bookmarks
 
-We first included `sinatra-flash` in the Gemfile and bundle installed it. We required flash and `uri` in the app.rb in order to carry out the checks.
-
 uri is a built in module from Ruby that allows checking of urls. Documentation can be found here:
 https://stackoverflow.com/questions/1805761/how-to-check-if-a-url-is-valid
 
-We first wrote tests for `link_spec.rb` that returns a false boolean if an invalid link has been entered. From there, following documentation for uri, I pasted in a line that evaluates a string for a URL.
+We first wrote tests for `bookmark_spec.rb` that returns a false boolean if an invalid link has been entered. From there, following documentation for uri, I pasted in a line that evaluates a string for a URL.
 
-I then also wrote a test for the `add_spec.rb`, checking for an error message that gets flashed. I then implemented it into `app.rb`, as well as including the text into the `view.rb`.
 
 #### Wrapping database data in Program Objects
 
 We first started to rewrite the tests in order to meet the new specifications outlined in the challenge.  While doing so, we have realised that Gadiza's RSpec was not clearing the test database for each test, and was only doing it at the beginning of the run. We sorted out the syntaxing mistake that she had, and then also changed the loop in the `spec_helper` from `require_relative` to `load` in order to get it to work.
+
+### Day 4 Gadiza and Matthew
+
+#### Adding create button
+
+We went through the code that we had written and made a create button to add a new bookmark. We first added a feature test to see if there is a button. Then made a new post '/bookmarks/new' in the app.rb, with a erb file to create a button and redirect us to the '/bookmarks' page.
+
+Then we changed the post '/bookmarks' in the app to only make a bookmark if the user submits a valid url and a title.
+
+#### Adding link to website
+
+We started with making a feature test that checks if there is a link to the website if you click on the title. Changed bookmark.rb to give Bookmark urls as links.
+We changed the app.rb so you can update the title if you try to create a bookmark with a url that is already in the database.
+Then added a method for the url to be returned as a string
+We made a feature test to make a delete button for each bookmark to make it possible to delete the bookmarks you want out of the database. Got the deletebutton working after a long time trying.

@@ -9,7 +9,7 @@ class BookmarkManager < Sinatra::Base
   enable :sessions
 
   get '/' do
-    'Hello World'
+    redirect('/bookmarks')
   end
 
   post '/bookmarks' do
@@ -27,7 +27,7 @@ class BookmarkManager < Sinatra::Base
 
     @bookmarks = Bookmark.all
     @urls = Bookmark.display
-    erb :index
+    erb :"bookmarks/index"
 
   end
 
