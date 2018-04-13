@@ -2,6 +2,7 @@ require 'bookmark'
 
 describe Bookmark do
   describe '.all' do
+
     it 'returns all bookmarks title in an array' do
       Bookmark.create('http://test1.com', 'makersacademy')
       Bookmark.create('http://test2.com', 'destroyallsoftware')
@@ -17,11 +18,13 @@ describe Bookmark do
     end
   end
   describe '.create' do
+
     it 'creates a new bookmark' do
       Bookmark.create('http://www.test4.com', 'test4')
 
       expect(Bookmark.all).to include 'test4'
     end
+
     it 'does not create a new bookmark if the URL is not valid' do
       Bookmark.create('not a real bookmark', 'not a real title')
 
@@ -42,7 +45,7 @@ end
 describe'.delete' do
   it 'deletes a bookmark' do
     Bookmark.create('http://www.test10.com', 'test10')
-    Bookmark.delete('http://www.test10.com')
+    Bookmark.delete('test10')
     expect(Bookmark.all).not_to include "test10"
   end
 end

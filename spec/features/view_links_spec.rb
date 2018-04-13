@@ -18,7 +18,7 @@ feature 'View links' do
   end
   scenario "The user can delete a bookmark" do
     Bookmark.create('http://test11.com', 'test11')
-    Bookmark.delete('http://test11.com')
+    Bookmark.delete('test11')
     visit('/bookmarks')
 
     expect(page).not_to have_link("test11", :href =>"http://test11.com")

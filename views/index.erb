@@ -5,12 +5,14 @@
 <% @urls.each do |url| %>
 
 
-<li><%= url %><form action="/bookmarks/delete" method="post"><input type="submit" value='Delete' /></form></li>
+<form action="/bookmarks/delete" method="post"><li><%= url %></form></li>
 
 
 <% end %>
 
 </ul>
+
 <form action="/bookmarks/new" method="get">
 <input type="submit" value='create bookmark' />
+
 </form>
